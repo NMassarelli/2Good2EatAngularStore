@@ -18,7 +18,6 @@
     "paths": {
       "product": [
         "./dist/product",
-        "./dist/product"
       ]
     },
     "importHelpers": true,
