@@ -1,6 +1,6 @@
 export enum ProductTypeEnum {
-    None = 0
+     None = 0
     ,Candle = 1
-    ,WaxMelt = 2
-    ,CrochetPlushie = 3
+    ,Wax_Melt = 2
+    ,Crochet_Plushie = 3
 }

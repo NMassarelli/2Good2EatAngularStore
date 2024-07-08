@@ -1,12 +1,12 @@
-export type ProductModel= {
-    Id: number;
-    Name: string;
-    Description : string;
-    ProductImageURL : string;
-    WholesalePrice : number;
-    RetailPrice : number;
-    Inventory: number;
-    IsVisible : boolean;
-    IsDeleted : boolean;
+export class ProductModel{
+    Id = 0;
+    Name= "";
+    Description = "";
+    ProductImageURL = "";
+    WholesalePrice = 0
+    RetailPrice = 0;
+    Inventory = 0;
+    IsVisible  = false;
+    IsDeleted= false;
 
 }
