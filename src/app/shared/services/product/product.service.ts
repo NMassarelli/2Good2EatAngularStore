@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 
 import { ProductModel } from '../../../shared/models/product.model';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
@@ -12,25 +12,53 @@ import { ProductTypeEnum } from '../../enum/product-type.enum';
   providedIn: 'root'
 })
 export class ProductService {
-  productUrl = "api/Product/GetFilteredProducts/";
+  getFilteredProductsURL = "api/Product/GetFilteredProducts/";
+  saveProductURL = "api/Product/Save";
+  getProductURL = "api/Product/";
   searchTerms: ProductSearchModel = {
     ifDeleted: false,
     ifVisible: true,
-    productTypes : [ProductTypeEnum.Candle, ProductTypeEnum.Crochet_Plushie, ProductTypeEnum.Wax_Melt]
-  }
+    productTypes: [ProductTypeEnum.Candle, ProductTypeEnum.Crochet_Plushie, ProductTypeEnum.Wax_Melt]
+  };
+  private productList$!: Observable<ProductModel[]>;
   constructor(
     private http: HttpClient,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService) {
+    this.populateProducts();
+  }
 
-   
 
   getProducts(): Observable<ProductModel[]> {
-    return this.http.post<ProductModel[]>(this.productUrl, this.searchTerms)
+    this.productList$ = this.populateProducts().pipe(shareReplay());
+    return this.productList$;
+  }
+
+  private populateProducts(): Observable<ProductModel[]> {
+    return this.http.post<ProductModel[]>(this.getFilteredProductsURL, this.searchTerms)
       .pipe(
-        tap(_ => this.errorHandler.log('fetched products','ProductService')),
+        tap(_ => this.errorHandler.log('fetched products', 'ProductService')),
         catchError(this.errorHandler.handleError<ProductModel[]>('ProductsService', []))
       );
   }
 
-  
+  saveProduct(product: any): void 
+  {
+    this.http.post<void>(this.saveProductURL, product).pipe(
+      tap(_ => this.errorHandler.log('save product', 'ProductService')),
+      catchError(this.errorHandler.handleError<void>('ProductsService'))
+    ).subscribe();
+  }
+
+
+  getProduct(id : string): Observable<ProductModel>
+  {
+    return this.http.get<ProductModel>(`${this.getProductURL}/${id}`).pipe(
+      tap(_ => this.errorHandler.log('get product', 'ProductService')),
+      catchError(this.errorHandler.handleError<ProductModel>('ProductsService'))
+    );
+  }
+
+
+
+
 }

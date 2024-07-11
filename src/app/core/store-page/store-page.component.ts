@@ -1,36 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../shared/services/product/product.service'
 import { MatList, MatListItem } from '@angular/material/list'
 import {MatPaginatorModule} from '@angular/material/paginator'
 import { ProductModel } from '../../shared/models/product.model';
 import { ProductComponent } from '../product/product.component';
-import { HttpClient } from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatSidenavModule} from '@angular/material/sidenav'; 
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'store-page',
   standalone: true,
   imports: [MatList, MatListItem, MatPaginatorModule, ProductComponent, MatCheckboxModule,MatSidenavModule],
-  providers:[ProductService, HttpClient],
+  providers:[ProductService],
   templateUrl: './store-page.component.html',
   styleUrl: './store-page.component.scss'
 })
-export class StorePageComponent implements OnInit {
+export class StorePageComponent implements OnInit, OnDestroy {
   itemPerPageCount!: number;
   productList!: ProductModel[];
+  productSub! : Subscription;
   TotalProducts!: number;
   pageCount!: number;
+  
+  constructor(private productService: ProductService){
 
-  constructor(private productService: ProductService){}
+  }
+  ngOnDestroy(): void {
+    this.productSub.unsubscribe();
+  }
   
   ngOnInit(): void {
-    this.getProductSlice();
-    //this.TotalProducts = this.productList.length;
+   this.productSub = this.productService.getProducts().subscribe(
+    product => {
+      this.productList = product,
+      this.TotalProducts = product.length
+      
+   
+   });
   }
 
   getProductSlice() : void{
-    this.productService.getProducts().subscribe((products: ProductModel[]) => this.productList = products.slice(1,5));
+    
   }
 
   CalcPageCount()

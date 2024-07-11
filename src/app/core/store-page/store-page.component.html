@@ -1,13 +1,19 @@
 
-<mat-list>
-    <ng-container>
-        @for(product of productList; track product){
-            <mat-list-item><product [product]="product"></product></mat-list-item>      
-        }
-    </ng-container>
-</mat-list>
-<mat-paginator [length]= "pageCount"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25]"
-              aria-label="Select page">
-</mat-paginator>
+@defer{
+    <mat-list>
+        <ng-container>
+            @for(product of productList; track product){
+                <mat-list-item>
+                    <product [product]="product"></product>
+                </mat-list-item>      
+            }
+        </ng-container>
+    </mat-list>
+    <mat-paginator [length]= "pageCount"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25]"
+                aria-label="Select page">
+    </mat-paginator>
+} @loading{
+    <span>Please wait</span>
+}

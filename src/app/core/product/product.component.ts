@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ProductModel } from '../../shared/models/product.model';
-import { MatCard, MatCardContent } from '@angular/material/card'
-import {  MatFormField } from '@angular/material/form-field'
+import { MatCard, MatCardContent, MatCardModule } from '@angular/material/card'
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'product',
   standalone: true,
-  imports: [MatCard, MatCardContent, MatFormField],
+  imports: [MatCard, MatCardContent, MatCardModule, MatButtonModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })

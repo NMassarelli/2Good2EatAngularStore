@@ -1,12 +1,14 @@
+
 export class ProductModel{
-    Id = 0;
+    Id = "";
     Name= "";
     Description = "";
     ProductImageURL = "";
-    WholesalePrice = 0
-    RetailPrice = 0;
+    WholesalePrice = ""
+    RetailPrice = "";
     Inventory = 0;
-    IsVisible  = false;
-    IsDeleted= false;
+    IsVisible =true;
+    IsDeleted = false;
+    ProductType = 0;
 
 }
