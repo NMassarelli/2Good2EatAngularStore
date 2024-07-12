@@ -24,12 +24,11 @@ export class ProductService {
   constructor(
     private http: HttpClient,
     private errorHandler: ErrorHandlerService) {
-    this.populateProducts();
+    this.refreshProducts();
   }
 
 
   getProducts(): Observable<ProductModel[]> {
-    this.productList$ = this.populateProducts().pipe(shareReplay());
     return this.productList$;
   }
 
@@ -58,7 +57,8 @@ export class ProductService {
     );
   }
 
-
-
+  refreshProducts() : void {
+    this.productList$ = this.populateProducts();
+  }
 
 }

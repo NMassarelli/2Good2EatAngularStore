@@ -1,17 +1,11 @@
-
-
-        @for(product of productList; track product){
-        <mat-grid-list cols="2" rowHeight="2:1">
-            <mat-grid-tile>
-                <product [product]="product"></product>
-            </mat-grid-tile>     
-        </mat-grid-list> 
+<mat-grid-list cols="2" rowHeight="2:1">
+    @for (p of productObv$ | async; track p.id){
+        <mat-grid-tile>
+            <product [product]="p"></product>
+        </mat-grid-tile>
         } @empty{
-            <span>Sorry no products available!</span>
-        }
-   
-    <mat-paginator [length]= "pageCount"
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25]"
-                aria-label="Select page">
-    </mat-paginator>
+        <mat-grid-tile><span>Sorry no products available!</span> </mat-grid-tile>
+    }
+</mat-grid-list>
+<mat-paginator [length]="pageCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+    aria-label="Select page"></mat-paginator>

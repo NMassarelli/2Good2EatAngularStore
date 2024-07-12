@@ -18,6 +18,9 @@
     "paths": {
       "product": [
         "./dist/product",
+      ],
+      "assets":[
+        "./public"
       ]
     },
     "importHelpers": true,

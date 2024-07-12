@@ -1,14 +1,14 @@
 
 export class ProductModel{
-    Id = "";
-    Name= "";
-    Description = "";
-    ProductImageURL = "";
-    WholesalePrice = ""
-    RetailPrice = "";
-    Inventory = 0;
-    IsVisible =true;
-    IsDeleted = false;
-    ProductType = 0;
+    id!: string;
+    name! : string;
+    description! : string;
+    productImageURL!: string;
+    wholesalePrice! : string;
+    retailPrice! : string;
+    inventory! : number;
+    isVisible! : boolean;
+    isDeleted!: boolean;
+    productType!: number;
 
 }

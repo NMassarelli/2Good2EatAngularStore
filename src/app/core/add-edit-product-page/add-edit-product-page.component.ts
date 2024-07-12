@@ -44,16 +44,16 @@ export class AddEditProductPageComponent implements OnInit{
   private productService = inject(ProductService);
   private util = inject(UtilitiesService);
   productForm = new FormGroup({
-    Id:new FormControl<string>(''),
-    Name:new FormControl<string>('',Validators.required),
-    Description:new FormControl<string>('',Validators.required),
-    ProductImageURL:new FormControl<string>('',Validators.required),
-    WholesalePrice:new FormControl<string>('',Validators.required),
-    RetailPrice:new FormControl<string>('',Validators.required),
-    Inventory:new FormControl<number>(0,Validators.required),
-    IsVisible:new FormControl<boolean>(true,Validators.required),
-    IsDeleted:new FormControl<boolean>(false,Validators.required),
-    ProductType:new FormControl<number>(0,Validators.required),
+    id:new FormControl<string>(''),
+    name:new FormControl<string>('',Validators.required),
+    description:new FormControl<string>('',Validators.required),
+    productImageURL:new FormControl<string>('',Validators.required),
+    wholesalePrice:new FormControl<string>('',Validators.required),
+    retailPrice:new FormControl<string>('',Validators.required),
+    inventory:new FormControl<number>(0,Validators.required),
+    isVisible:new FormControl<boolean>(true,Validators.required),
+    isDeleted:new FormControl<boolean>(false,Validators.required),
+    productType:new FormControl<number>(0,Validators.required),
   });
   uploadErrorMessage = "";
   productTypeOptions : { key: number; value: string; }[] = [];
@@ -79,7 +79,7 @@ export class AddEditProductPageComponent implements OnInit{
 
 
   handleUploadSuccess(res: any) {
-    this.productForm.controls.ProductImageURL.setValue(res.url);
+    this.productForm.controls.productImageURL.setValue(res.url);
     this.isImageUploadFinished = true;
   }
 
