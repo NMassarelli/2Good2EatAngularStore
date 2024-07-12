@@ -11,6 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './product.component.scss'
 })
 export class ProductComponent {
-  @Input() product!: ProductModel;
+  @Input()product!: ProductModel;
+
+  constructor(){
+    console.log(this.product)
+  }
 
 }
