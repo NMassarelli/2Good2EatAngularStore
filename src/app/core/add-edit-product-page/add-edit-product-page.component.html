@@ -4,17 +4,17 @@
       <tr>
         <td><mat-form-field class="full-width">
             <mat-label>Product Name</mat-label>
-            <input matInput placeholder="Product Name" formControlName="Name">
+            <input matInput placeholder="Product Name" formControlName="name">
           </mat-form-field></td>
         <td><mat-form-field class="full-width">
             <mat-label>Inventory</mat-label>
-            <input matInput type="number" placeholder="Inventory" formControlName="Inventory">
+            <input matInput type="number" placeholder="Inventory" formControlName="inventory">
           </mat-form-field></td>
       </tr>
       <tr>
         <td><mat-form-field>
             <mat-label>Product Type</mat-label>
-            <mat-select formControlName="ProductType">
+            <mat-select formControlName="productType">
               @for(option of productTypeOptions; track option.key){
               <mat-option [value]="option.key">{{option.value}}</mat-option>
               }
@@ -22,17 +22,17 @@
           </mat-form-field></td>
         <td><mat-form-field class="full-width">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" formControlName="Description"></textarea>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
           </mat-form-field></td>
       </tr>
       <tr>
         <td><mat-form-field class="full-width">
             <mat-label>Wholesale Price</mat-label>
-            <input matInput placeholder="Wholesale Price" formControlName="WholesalePrice">
+            <input matInput placeholder="Wholesale Price" formControlName="wholesalePrice">
           </mat-form-field></td>
         <td><mat-form-field class="full-width">
             <mat-label>Retail Price</mat-label>
-            <input matInput placeholder="Retail Price" formControlName="RetailPrice">
+            <input matInput placeholder="Retail Price" formControlName="retailPrice">
           </mat-form-field></td>
       </tr>
       <tr>
@@ -71,7 +71,7 @@
         <td>
           <mat-form-field>
             <mat-label>IsVisible</mat-label>
-            <mat-select formControlName="IsVisible">
+            <mat-select formControlName="isVisible">
               @for(yesOrNo of yesNoEnum; track yesOrNo.key){
                 <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
               }
@@ -81,7 +81,7 @@
         <td>
           <mat-form-field>
             <mat-label>Is Soft Deleted</mat-label>
-            <mat-select formControlName="IsDeleted">
+            <mat-select formControlName="isDeleted">
               @for(yesOrNo of yesNoEnum ; track yesOrNo.key){
                 <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
               }

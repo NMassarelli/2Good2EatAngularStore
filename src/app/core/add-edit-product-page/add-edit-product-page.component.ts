@@ -2,7 +2,6 @@ import {Component, inject, Input, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ProductModel } from '../../shared/models/product.model';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button'
 import {ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +14,6 @@ import { AuthenticationService } from '../../shared/services/authentication/auth
 import { ProductService } from '../../shared/services/product/product.service';
 import { UtilitiesService } from '../../shared/services/util/utilities.service';
 import { YesNoEnum } from '../../shared/enum/yes-no.enum';
-import { KeyValuePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({

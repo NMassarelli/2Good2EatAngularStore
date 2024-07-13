@@ -17,7 +17,7 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './store-page.component.html',
   styleUrl: './store-page.component.scss'
 })
-export class StorePageComponent implements OnInit, OnDestroy {
+export class StorePageComponent {
   itemPerPageCount!: number;
   productObv$ : Observable<ProductModel[]>;
   TotalProducts!: number;
@@ -28,13 +28,6 @@ export class StorePageComponent implements OnInit, OnDestroy {
     this.productService = inject(ProductService);
     this.productObv$ = this.productService.getProducts();
 
-  }
-  ngOnDestroy(): void {
-
-  }
-  
-  ngOnInit(): void {
-   
   }
 
   getProductSlice() : void{

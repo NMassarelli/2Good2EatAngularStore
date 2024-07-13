@@ -1,0 +1,28 @@
+.surround{
+    padding-left: 5px;
+}
+
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+  }
+
+  .sideNav {
+    width: 200px;
+    min-width: 200px;
+  }
+
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+mat-paginator{
+    justify-content: center;
+}

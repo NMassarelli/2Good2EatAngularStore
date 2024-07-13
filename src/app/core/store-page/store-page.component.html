@@ -1,11 +1,17 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-    @for (p of productObv$ | async; track p.id){
-        <mat-grid-tile>
-            <product [product]="p"></product>
-        </mat-grid-tile>
-        } @empty{
-        <mat-grid-tile><span>Sorry no products available!</span> </mat-grid-tile>
-    }
-</mat-grid-list>
-<mat-paginator [length]="pageCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
-    aria-label="Select page"></mat-paginator>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened class="sideNav">Sidenav content</mat-sidenav>
+    <mat-sidenav-content>
+        <div class="surround">
+            <mat-grid-list cols="4" rowHeight="3:6">
+                @for (p of productObv$ | async; track p.id){
+                <mat-grid-tile>
+                    <product [product]="p"></product>
+                </mat-grid-tile>
+                } @empty{
+                <mat-grid-tile><span>Sorry no products available!</span> </mat-grid-tile>
+                }
+            </mat-grid-list>
+        </div>
+            <mat-paginator  class="footer" [length]="pageCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
+    </mat-sidenav-content>
+</mat-sidenav-container>
