@@ -1,9 +1,13 @@
-mat-card img{
-  object-fit: cover; /*this makes the image in src fit to the size specified below*/
-  width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
-  height: 60%;
+@use '@angular/material' as mat;
+
+.example-card {
+  max-width: 200px;
+  margin-bottom: 8px;
+
 }
 
-mat-card {
-  max-width: 200px;
+
+.productCardHeader{
+  @include mat.elevation(1)
+
 }

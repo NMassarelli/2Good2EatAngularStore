@@ -1,11 +1,23 @@
 <form class="form" [formGroup]="productForm">
+  @if(productId == null)
+  {
+  <h3>Add New Product</h3>
+  }@else
+  {
+    <h3>Edit Product</h3>
+  }
   <table class="full-width" cellspacing="0">
     <tbody>
       <tr>
-        <td><mat-form-field class="full-width">
+        <td>
+          <mat-form-field>
+            <input matInput formControlName="id" readonly>
+          </mat-form-field>
+          <mat-form-field class="full-width">
             <mat-label>Product Name</mat-label>
             <input matInput placeholder="Product Name" formControlName="name">
-          </mat-form-field></td>
+          </mat-form-field>
+        </td>
         <td><mat-form-field class="full-width">
             <mat-label>Inventory</mat-label>
             <input matInput type="number" placeholder="Inventory" formControlName="inventory">
@@ -14,7 +26,7 @@
       <tr>
         <td><mat-form-field>
             <mat-label>Product Type</mat-label>
-            <mat-select formControlName="productType">
+            <mat-select formControlName="productType" [compareWith]="productComparefn">
               @for(option of productTypeOptions; track option.key){
               <mat-option [value]="option.key">{{option.value}}</mat-option>
               }
@@ -28,52 +40,54 @@
       <tr>
         <td><mat-form-field class="full-width">
             <mat-label>Wholesale Price</mat-label>
-            <input matInput placeholder="Wholesale Price" formControlName="wholesalePrice">
+            <input matInput type="text" placeholder="Wholesale Price" currencyMask formControlName="wholesalePrice">
           </mat-form-field></td>
         <td><mat-form-field class="full-width">
             <mat-label>Retail Price</mat-label>
-            <input matInput placeholder="Retail Price" formControlName="retailPrice">
+            <input matInput type="text" placeholder="Retail Price" currencyMask formControlName="retailPrice">
           </mat-form-field></td>
       </tr>
       <tr>
         <td>
-          <ik-upload 
-          fileName="test.jpg" 
-          (onError)="handleUploadError($event)"
-          (onSuccess)="handleUploadSuccess($event)"
-          [authenticator]="authService.authenticator" 
-          [transformation] = "{
-            'pre': 'l-text,i-Imagekit,fs-50,l-end', 
+          <ik-upload fileName="{{fileNameValue}}.png" (onError)="handleUploadError($event)"
+            (onSuccess)="handleUploadSuccess($event)" [authenticator]="authService.authenticator" [transformation]="{
             'post': [
                 {
-                    'type': 'transformation', 
-                    'value': 'w-100'
+                    'type': 'transformation',
+                    'value': 'width:300,height:300,quality:100'
                 }
             ]
-          }"
-          >
-        </ik-upload> 
-        @if (isImageUploadFinished) {
+          }">
+          </ik-upload>
+          <mat-form-field class="full-width">
+            <mat-label>Enter image name from Imagekit</mat-label>
+            <input matInput formControlName="productImageURL">
+          </mat-form-field>
+        </td>
+        <td>
+          @if (isImageUploadFinished) {
+            <div>Upload Complete</div>
           <button mat-icon-button>
-          <mat-icon>check</mat-icon>
-        </button>
-         
-        } @else{
-          <button mat-icon-button>
-            <mat-icon>cancel</mat-icon>
+           <mat-icon>check</mat-icon>
           </button>
-        }
-      
+
+          } @else{
+          <div>  Upload Or Enter Image Name</div>
+          <button mat-icon-button>
+          <mat-icon>cancel</mat-icon>
+          </button>
+
+          }
         </td>
       </tr>
-             
+
       <tr>
         <td>
           <mat-form-field>
             <mat-label>IsVisible</mat-label>
-            <mat-select formControlName="isVisible">
+            <mat-select formControlName="isVisible" [compareWith]="yesNoCompareFunction">
               @for(yesOrNo of yesNoEnum; track yesOrNo.key){
-                <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
+              <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -81,15 +95,15 @@
         <td>
           <mat-form-field>
             <mat-label>Is Soft Deleted</mat-label>
-            <mat-select formControlName="isDeleted">
+            <mat-select formControlName="isDeleted"  [compareWith]="yesNoCompareFunction">
               @for(yesOrNo of yesNoEnum ; track yesOrNo.key){
-                <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
+              <mat-option [value]="isYes(yesOrNo.key)">{{yesOrNo.value}}</mat-option>
               }
             </mat-select>
           </mat-form-field>
         </td>
         <td>
-          
+
         </td>
       </tr>
     </tbody>

@@ -1,19 +1,21 @@
 .surround{
-    padding-left: 5px;
+    padding-top: 5rem;
+    padding-bottom: 0rem;
+    padding-left: 1rem;
+    padding-right: 0rem;
 }
 
-.example-container {
+.sideNavContainer {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #eee;
+
   }
 
   .sideNav {
-    width: 200px;
-    min-width: 200px;
+    width: 10%;
   }
 
 .footer{
@@ -22,7 +24,15 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-}
-mat-paginator{
     justify-content: center;
+}
+
+
+.imageStyle{
+  border-radius: 3rem;
+
+}
+
+.tileStyle{
+  border-radius: 1rem;
 }

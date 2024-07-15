@@ -4,5 +4,6 @@ import { AddEditProductPageComponent } from './core/add-edit-product-page/add-ed
 
 export const routes: Routes = [
     {path:'', component: StorePageComponent},
-    {path:'addEditProduct', component:AddEditProductPageComponent}
+    {path:'addEditProduct', component:AddEditProductPageComponent},
+    {path:'addEditProduct/:id', component:AddEditProductPageComponent}
 ];

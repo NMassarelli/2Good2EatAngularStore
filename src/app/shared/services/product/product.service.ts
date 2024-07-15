@@ -16,8 +16,8 @@ export class ProductService {
   saveProductURL = "api/Product/Save";
   getProductURL = "api/Product/";
   searchTerms: ProductSearchModel = {
-    ifDeleted: false,
-    ifVisible: true,
+    showDeleted: false,
+    showInvisible: false,
     productTypes: [ProductTypeEnum.Candle, ProductTypeEnum.Crochet_Plushie, ProductTypeEnum.Wax_Melt]
   };
   private productList$!: Observable<ProductModel[]>;
@@ -40,16 +40,18 @@ export class ProductService {
       );
   }
 
-  saveProduct(product: any): void 
+  saveProduct(product: any): void
   {
     this.http.post<void>(this.saveProductURL, product).pipe(
       tap(_ => this.errorHandler.log('save product', 'ProductService')),
       catchError(this.errorHandler.handleError<void>('ProductsService'))
     ).subscribe();
+
+    this.refreshProducts();
   }
 
 
-  getProduct(id : string): Observable<ProductModel>
+  getProduct(id : number): Observable<ProductModel>
   {
     return this.http.get<ProductModel>(`${this.getProductURL}/${id}`).pipe(
       tap(_ => this.errorHandler.log('get product', 'ProductService')),

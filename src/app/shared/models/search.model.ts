@@ -1,7 +1,7 @@
 import { ProductTypeEnum } from "../enum/product-type.enum";
 
 export type ProductSearchModel = {
-    ifDeleted: boolean;
-    ifVisible : boolean;
+    showDeleted: boolean;
+    showInvisible : boolean;
     productTypes : ProductTypeEnum[];
 }

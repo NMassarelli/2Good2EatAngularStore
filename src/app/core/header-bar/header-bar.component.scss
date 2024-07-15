@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .spacer{
     position: absolute;
     right: 20px;
@@ -7,4 +9,5 @@
     position:fixed;
     top:0;
     z-index: 2;
+    @include mat.elevation(8)
 }

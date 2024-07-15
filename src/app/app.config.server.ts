@@ -3,17 +3,17 @@ import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
 import { provideHttpClient, withFetch, withJsonpSupport } from '@angular/common/http';
 
-import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from '../environments/environment';
+import { provideImageKitLoader } from '@angular/common';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { routes } from './app.routes';
 
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(),
     provideHttpClient(withFetch(), withJsonpSupport()),
-    importProvidersFrom(ImagekitioAngularModule.forRoot({
-      publicKey: environment.publicKey,
-      urlEndpoint: environment.urlEndpoint,
-    }))
+    provideImageKitLoader(environment.urlEndpoint),
+    provideRouter(routes, withComponentInputBinding())
   ]
 };
 
