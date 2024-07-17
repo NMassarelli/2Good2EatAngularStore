@@ -1,19 +1,30 @@
 <mat-sidenav-container class="sideNavContainer">
-    <mat-sidenav mode="side" opened class="sideNav">Sidenav content</mat-sidenav>
-    <mat-sidenav-content>
-        <div class="surround">
-            <mat-grid-list cols="6" gutter="100rem" rowHeight="5rem">
-                @for (p of productObv$ | async; track p.id){
-                  <mat-grid-tile [colspan]="1" [rowspan]="2"  class="tileStyle">
-                    <product [product]="p"></product>
-                  </mat-grid-tile>
-                } @empty{
-                <mat-grid-tile><span>Sorry no products available!</span> </mat-grid-tile>
-                }
-            </mat-grid-list>
-        </div>
-        <div class="footer">
-            <mat-paginator class="footer" [length]="pageCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
-        </div>
-    </mat-sidenav-content>
+  <mat-sidenav mode="side" opened class="sideNav">
+    <div class="selectDiv">
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked" multiple (change)="onFilterChange($event)" aria-label="Filter Options">
+        <mat-chip-option >show Invisible</mat-chip-option>
+        <mat-chip-option>show Deleted</mat-chip-option>
+        @for (type of productTypeOptions; track type) {
+        <mat-chip-option selected>{{type.value}}</mat-chip-option>
+        }
+      </mat-chip-listbox>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="surround">
+      <mat-grid-list cols="6" gutter="100rem" rowHeight="6rem">
+        @for (p of productObv$ | async; track p.id){
+        <mat-grid-tile [colspan]="1" [rowspan]="2" class="tileStyle">
+          <product [product]="p"></product>
+        </mat-grid-tile>
+        } @empty{
+        <mat-grid-tile><span>Sorry no products available!</span> </mat-grid-tile>
+        }
+      </mat-grid-list>
+    </div>
+    <div class="footer">
+      <mat-paginator class="footer" [length]="pageCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

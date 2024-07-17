@@ -6,8 +6,6 @@ import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 
 import { ProductModel } from '../../../shared/models/product.model';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
-import { ProductSearchModel } from '../../models/search.model';
-import { ProductTypeEnum } from '../../enum/product-type.enum';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,25 +13,19 @@ export class ProductService {
   getFilteredProductsURL = "api/Product/GetFilteredProducts/";
   saveProductURL = "api/Product/Save";
   getProductURL = "api/Product/";
-  searchTerms: ProductSearchModel = {
-    showDeleted: false,
-    showInvisible: false,
-    productTypes: [ProductTypeEnum.Candle, ProductTypeEnum.Crochet_Plushie, ProductTypeEnum.Wax_Melt]
-  };
-  private productList$!: Observable<ProductModel[]>;
   constructor(
     private http: HttpClient,
     private errorHandler: ErrorHandlerService) {
-    this.refreshProducts();
+    this.getFilteredProducts();
   }
 
 
-  getProducts(): Observable<ProductModel[]> {
-    return this.productList$;
+  getFilteredProducts(searchTerm? : any): Observable<ProductModel[]> {
+    return this.populateProducts(searchTerm);
   }
 
-  private populateProducts(): Observable<ProductModel[]> {
-    return this.http.post<ProductModel[]>(this.getFilteredProductsURL, this.searchTerms)
+  private populateProducts(searchTerms : any): Observable<ProductModel[]> {
+    return this.http.post<ProductModel[]>(this.getFilteredProductsURL, searchTerms)
       .pipe(
         tap(_ => this.errorHandler.log('fetched products', 'ProductService')),
         catchError(this.errorHandler.handleError<ProductModel[]>('ProductsService', []))
@@ -46,8 +38,6 @@ export class ProductService {
       tap(_ => this.errorHandler.log('save product', 'ProductService')),
       catchError(this.errorHandler.handleError<void>('ProductsService'))
     ).subscribe();
-
-    this.refreshProducts();
   }
 
 
@@ -59,8 +49,6 @@ export class ProductService {
     );
   }
 
-  refreshProducts() : void {
-    this.productList$ = this.populateProducts();
-  }
+
 
 }

@@ -3,7 +3,12 @@
     <mat-card-title-group class="productCardHeader">
       <mat-card-title>{{product.name}}</mat-card-title>
       <mat-card-subtitle class="priceMask">{{getPrice(product.retailPrice, 'USD')}}</mat-card-subtitle>
-      <img mat-card-sm-image ngSrc="{{product.productImageURL}}" width="50" height="50">
+    <ik-image
+    path={{product.productImageURL}}
+    [transformation]="placeholderBlurTransformation"
+    [lqip]="lqip"
+    >
+  </ik-image>
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content>
