@@ -34,7 +34,6 @@ export class ProductComponent {
 
 
   getPrice(price: string, currencyFormat: string): string {
-
     let convertedPrice = parseInt(price);
     return convertedPrice.toLocaleString('us-US', { style: 'currency', currency: currencyFormat });
 

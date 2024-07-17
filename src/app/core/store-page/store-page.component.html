@@ -1,14 +1,15 @@
 <mat-sidenav-container class="sideNavContainer">
   <mat-sidenav mode="side" opened class="sideNav">
     <div class="selectDiv">
+      Filters
       <mat-chip-listbox class="mat-mdc-chip-set-stacked" multiple (change)="onFilterChange($event)" aria-label="Filter Options">
-        <mat-chip-option >show Invisible</mat-chip-option>
+        <mat-chip-option>show Out Of Stock</mat-chip-option>
+        <mat-chip-option>show Invisible</mat-chip-option>
         <mat-chip-option>show Deleted</mat-chip-option>
         @for (type of productTypeOptions; track type) {
-        <mat-chip-option selected>{{type.value}}</mat-chip-option>
+        <mat-chip-option selected>{{type.value}}s</mat-chip-option>
         }
       </mat-chip-listbox>
-
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

@@ -64,6 +64,7 @@ export class StorePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter = {
+      showOutOfStock: false,
       showDeleted: false,
       showInvisible: false,
       productTypes: [ProductTypeEnum.Candle,ProductTypeEnum.Crochet_Item,ProductTypeEnum.Wax_Melt]
@@ -89,16 +90,21 @@ export class StorePageComponent implements OnInit {
         case "show Invisible":
           this.filter.showInvisible = true;
           break;
+        case "show Out Of Stock":
+          this.filter.showOutOfStock = true;
+          break;
         default:
+          // This is a little funky, currently looking into a way to reference the chips directly
+          element = element.substring(0, element.length-1);
           let foundValue = this.util.convertStringToProductEnumValue(element);
           this.filter.productTypes.push(foundValue)
           break;
-
       }
     });
 
    this.productObv$ = this.productService.getFilteredProducts(this.filter);
    this.filter = {
+      showOutOfStock: false,
       showDeleted: false,
       showInvisible: false,
       productTypes: []
