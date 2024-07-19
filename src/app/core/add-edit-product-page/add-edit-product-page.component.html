@@ -50,7 +50,7 @@
       <tr>
         <td>
           <ik-upload fileName="{{fileNameValue}}.png" (onError)="handleUploadError($event)"
-            (onSuccess)="handleUploadSuccess($event)" [authenticator]="authService.authenticator" [transformation]="{
+            (onSuccess)="handleUploadSuccess($event)" [authenticator]="authService.imagekitAuthenticator" [transformation]="{
             'post': [
                 {
                     'type': 'transformation',

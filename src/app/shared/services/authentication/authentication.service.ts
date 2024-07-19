@@ -1,16 +1,36 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { User } from '../../models/user.model';
+
+
+type AuthState = {
+  user: User | null;
+  token: string | null;
+  is_auth: boolean;
+  loading: boolean;
+};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthenticationService {
+  private _accessTokenKey = "accessToken";
+  private _storedToken = localStorage.getItem(this._accessTokenKey);
+  private _state = signal<AuthState>({
+    user: null,
+    token: this._storedToken,
+    is_auth: this._storedToken !== null, // You may check the token validity here
+    loading: false,
+});
+token = computed(() => this._state().token);
+loading = computed(() => this._state().loading);
+isAuth = computed(() => this._state().is_auth);
+user = computed(() => this._state().user);
 constructor(){}
 
-
-  authenticator = async () => {
+  imagekitAuthenticator = async () => {
     try {
-      // You can pass headers as well and later validate the request source in the backend, or you can use headers for any other use case.
       const response = await fetch(environment.apiUrl + '/GenerateKeyForImagekit',{method: "POST"});
 
       if (!response.ok) {
@@ -27,4 +47,15 @@ constructor(){}
       throw new Error(`Authentication request failed: ${error}`);
     }
   };
+
+
+  logOn(){
+
+  }
+
+
+
+
+
+
 }

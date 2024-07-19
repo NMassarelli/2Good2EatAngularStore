@@ -14,7 +14,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="surround">
-      <mat-grid-list cols="6" gutter="100rem" rowHeight="6rem">
+      <mat-grid-list cols="6" rowHeight="8rem">
         @for (p of productObv$ | async; track p.id){
         <mat-grid-tile [colspan]="1" [rowspan]="2" class="tileStyle">
           <product [product]="p"></product>

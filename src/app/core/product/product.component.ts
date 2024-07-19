@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ProductModel } from '../../shared/models/product.model';
-import { MatCard, MatCardContent, MatCardModule } from '@angular/material/card';
+import {  MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIcon } from '@angular/material/icon';
@@ -25,8 +25,8 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 export class ProductComponent {
   @Input({ required: true }) product!: ProductModel;
   placeholderBlurTransformation: Array<Transformation> = [{
-    height: "50",
-    width: "50",
+    height: "100",
+    width: "100",
   }];
   lqip = {
     active: true
