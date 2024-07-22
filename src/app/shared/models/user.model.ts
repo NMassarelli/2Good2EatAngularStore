@@ -6,4 +6,6 @@ export class User{
     passwordHash!: string;
     firstName! : string;
     lastName! : string;
+
 }
+

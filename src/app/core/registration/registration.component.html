@@ -1,3 +1,41 @@
-<p>
-  registration works!
-</p>
+<form class="form" [formGroup]="registerForm">
+  <table class="full-width" cellspacing="0">
+    <tbody>
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="email" formControlName="email">
+          </mat-form-field>
+        </td>
+        <td><mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="text" placeholder="password" formControlName="password">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First Name" formControlName="firstName">
+          </mat-form-field>
+        </td>
+        <td><div class="full-width">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="text" placeholder="Confirm Password">
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Last Name" formControlName="lastName">
+          </mat-form-field>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button  mat-raised-button (click)="save()">Save</button>
+</form>

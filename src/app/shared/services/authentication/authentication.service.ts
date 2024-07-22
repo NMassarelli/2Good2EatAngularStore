@@ -1,6 +1,10 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
+import { LoginResponse } from '../../models/login.model';
 
 
 type AuthState = {
@@ -17,21 +21,35 @@ type AuthState = {
 export class AuthenticationService {
   private _accessTokenKey = "accessToken";
   private _storedToken = localStorage.getItem(this._accessTokenKey);
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private loginUrl = "/";
   private _state = signal<AuthState>({
     user: null,
     token: this._storedToken,
     is_auth: this._storedToken !== null, // You may check the token validity here
     loading: false,
-});
-token = computed(() => this._state().token);
-loading = computed(() => this._state().loading);
-isAuth = computed(() => this._state().is_auth);
-user = computed(() => this._state().user);
-constructor(){}
+  });
+
+  token = computed(() => this._state().token);
+  loading = computed(() => this._state().loading);
+  isAuth = computed(() => this._state().is_auth);
+  user = computed(() => this._state().user);
+
+  constructor() {
+    effect(() => {
+      const token = this.token();
+      if (token !== null) {
+        localStorage.setItem(this._accessTokenKey, token);
+      } else {
+        localStorage.removeItem(this._accessTokenKey);
+      }
+    });
+  }
 
   imagekitAuthenticator = async () => {
     try {
-      const response = await fetch(environment.apiUrl + '/GenerateKeyForImagekit',{method: "POST"});
+      const response = await fetch(environment.apiUrl + '/GenerateKeyForImagekit', { method: "POST" });
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -48,14 +66,24 @@ constructor(){}
     }
   };
 
+  login(payload: any) {
+    this.http
+      .post<LoginResponse>(`${this.loginUrl}`, payload)
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: (res) => {
+          this._state.update((state) => {
+            state.user = res.user;
+            state.token = res.access_token;
+            state.loading = false;
+            return state;
+          });
+          this.router.navigate(["/"]);
+        },
+        error: (err) => {
+          // stop loading and show error message
+        },
+      });
 
-  logOn(){
-
-  }
-
-
-
-
-
-
+}
 }

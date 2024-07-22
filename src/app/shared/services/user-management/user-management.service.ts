@@ -3,6 +3,7 @@ import { User } from '../../models/user.model';
 import { catchError, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
+import { RegistrationRequest } from '../../models/login.model';
 
 type AuthState = {
   user: User | null;
@@ -20,13 +21,12 @@ export class UserManagementService {
     private http: HttpClient,
     private errorHandler: ErrorHandlerService) { }
 
-  register(user: User): Observable<boolean> {
-    return this.http.post<boolean>(this.registerPath, user)
+  register(request: RegistrationRequest): Observable<boolean> {
+    return this.http.post<boolean>(this.registerPath, request)
       .pipe(
         tap(_ => this.errorHandler.log('register User', 'UserManagementService')),
         catchError(this.errorHandler.handleError<boolean>('UserManagementService', false))
       );
   }
-
 
 }

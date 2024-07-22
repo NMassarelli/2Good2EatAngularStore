@@ -10,8 +10,18 @@
     <button mat-icon-button>
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button>
-      <mat-icon>login</mat-icon>
-    </button>
+    @if(isLoggedIn$ | async;){
+      <button mat-icon-button>
+        <mat-icon>user</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>logout</mat-icon>
+      </button>
+    } @else{
+      <button mat-icon-button>
+        <mat-icon>login</mat-icon>
+      </button>
+    }
+
   </div>
 </mat-toolbar>

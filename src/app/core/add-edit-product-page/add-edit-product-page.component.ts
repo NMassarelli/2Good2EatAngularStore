@@ -55,8 +55,6 @@ export class AddEditProductPageComponent implements OnInit, OnDestroy {
     productType: new FormControl<ProductTypeEnum>(ProductTypeEnum.None, Validators.required),
   });
 
-
-  private formBuilder = inject(FormBuilder);
   private productService = inject(ProductService);
   private util = inject(UtilitiesService);
   authService = inject(AuthenticationService);
