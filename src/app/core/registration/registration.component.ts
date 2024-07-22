@@ -1,13 +1,16 @@
 import { UserManagementService } from './../../shared/services/user-management/user-management.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormField, MatFormFieldControl, MatLabel } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
+  standalone: true,
+  imports: [MatLabel, MatFormField, ReactiveFormsModule],
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
   formBuilder = inject(FormBuilder);

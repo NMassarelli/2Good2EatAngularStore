@@ -2,14 +2,14 @@ import { User } from './user.model';
 
 
 export class LoginResponse{
-    user!: User;
-    access_token!: string;
+    user!: User| null;
+    token!: string| null;
 
 }
 
 export class LoginRequest{
-  email!: string;
-  password!: string;
+  email!: string| null;
+  password!: string| null;
 
 }
 

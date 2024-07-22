@@ -3,8 +3,9 @@ import { environment } from '../../../../environments/environment';
 import { User } from '../../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
-import { LoginResponse } from '../../models/login.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoginRequest, LoginResponse } from '../../models/login.model';
+import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
 
 
 type AuthState = {
@@ -20,7 +21,7 @@ type AuthState = {
 
 export class AuthenticationService {
   private _accessTokenKey = "accessToken";
-  private _storedToken = localStorage.getItem(this._accessTokenKey);
+  private _storedToken = ""//localStorage.getItem(this._accessTokenKey);
   private http = inject(HttpClient);
   private router = inject(Router);
   private loginUrl = "/";
@@ -40,9 +41,9 @@ export class AuthenticationService {
     effect(() => {
       const token = this.token();
       if (token !== null) {
-        localStorage.setItem(this._accessTokenKey, token);
+       // localStorage.setItem(this._accessTokenKey, token);
       } else {
-        localStorage.removeItem(this._accessTokenKey);
+        //localStorage.removeItem(this._accessTokenKey);
       }
     });
   }
@@ -66,7 +67,7 @@ export class AuthenticationService {
     }
   };
 
-  login(payload: any) {
+  login(payload: LoginRequest, returnUrl: string): void {
     this.http
       .post<LoginResponse>(`${this.loginUrl}`, payload)
       .pipe(takeUntilDestroyed())
@@ -74,16 +75,24 @@ export class AuthenticationService {
         next: (res) => {
           this._state.update((state) => {
             state.user = res.user;
-            state.token = res.access_token;
+            state.token = res.token;
             state.loading = false;
             return state;
           });
-          this.router.navigate(["/"]);
+          this.router.navigate([returnUrl]);
         },
         error: (err) => {
-          // stop loading and show error message
+          inject(ErrorHandlerService).handleError(err);
         },
       });
+  }
 
-}
+  logout() {
+    this._state.update((state) => {
+      state.user = null;
+      state.token = null;
+      state.loading = false;
+      return state;
+    });
+  }
 }
