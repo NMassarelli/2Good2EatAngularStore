@@ -10,7 +10,7 @@
         </td>
         <td><mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput type="text" placeholder="password" formControlName="password">
+            <input matInput  placeholder="password" formControlName="password">
           </mat-form-field>
         </td>
       </tr>
@@ -21,10 +21,10 @@
             <input matInput placeholder="First Name" formControlName="firstName">
           </mat-form-field>
         </td>
-        <td><div class="full-width">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput type="text" placeholder="Confirm Password">
-        </div>
+        <td><mat-form-field class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput  placeholder="confirm password" formControlName="confirmPassword">
+        </mat-form-field>
         </td>
       </tr>
       <tr>
@@ -37,5 +37,5 @@
       </tr>
     </tbody>
   </table>
-  <button  mat-raised-button (click)="onSubmit()">Save</button>
+  <button  mat-raised-button [disabled]="isSubmitDisabled" (click)="onSubmit()">Save</button>
 </form>

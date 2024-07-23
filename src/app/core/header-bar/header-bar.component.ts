@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
 import { Component, inject } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';

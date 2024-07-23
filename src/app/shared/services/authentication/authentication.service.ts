@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoginRequest, LoginResponse } from '../../models/login.model';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
+import { BrowserStorageService } from '../browser-service/browser-storage.service';
 
 
 type AuthState = {
@@ -13,6 +14,7 @@ type AuthState = {
   token: string | null;
   is_auth: boolean;
   loading: boolean;
+  roleValue : number;
 };
 
 @Injectable({
@@ -20,8 +22,9 @@ type AuthState = {
 })
 
 export class AuthenticationService {
-  private _accessTokenKey = "accessToken";
-  private _storedToken = ""//localStorage.getItem(this._accessTokenKey);
+  private _accessTokenKey = "2Good2Toke";
+  private browserStorage = inject(BrowserStorageService);
+  private _storedToken = this.browserStorage.get(this._accessTokenKey);
   private http = inject(HttpClient);
   private router = inject(Router);
   private loginUrl = "/";
@@ -29,6 +32,7 @@ export class AuthenticationService {
     user: null,
     token: this._storedToken,
     is_auth: this._storedToken !== null, // You may check the token validity here
+    roleValue: 0,
     loading: false,
   });
 
@@ -41,9 +45,9 @@ export class AuthenticationService {
     effect(() => {
       const token = this.token();
       if (token !== null) {
-       // localStorage.setItem(this._accessTokenKey, token);
+        this.browserStorage.set(this._accessTokenKey, token);
       } else {
-        //localStorage.removeItem(this._accessTokenKey);
+        this.browserStorage.remove(this._accessTokenKey);
       }
     });
   }
@@ -77,6 +81,7 @@ export class AuthenticationService {
             state.user = res.user;
             state.token = res.token;
             state.loading = false;
+            state.roleValue = res.roleValue
             return state;
           });
           this.router.navigate([returnUrl]);

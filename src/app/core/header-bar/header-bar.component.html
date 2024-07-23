@@ -12,13 +12,13 @@
     </button>
     @if(isLoggedIn){
       <button mat-icon-button>
-        <mat-icon>user</mat-icon>
+        <mat-icon>person</mat-icon>
       </button>
       <button mat-icon-button>
         <mat-icon>logout</mat-icon>
       </button>
     } @else{
-      <button mat-icon-button>
+      <button mat-icon-button routerLink="/login">
         <mat-icon>login</mat-icon>
       </button>
     }

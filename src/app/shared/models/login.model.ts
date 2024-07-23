@@ -4,6 +4,7 @@ import { User } from './user.model';
 export class LoginResponse{
     user!: User| null;
     token!: string| null;
+    roleValue!: number;
 
 }
 
