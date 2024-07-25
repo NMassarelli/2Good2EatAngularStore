@@ -1,17 +1,19 @@
 import { Component, ErrorHandler, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../shared/services/authentication/authentication.service';
 import { first } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [MatLabel, MatInputModule, ReactiveFormsModule, FormsModule, MatFormFieldModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -20,15 +22,15 @@ export class LoginComponent implements OnInit{
   submitted!: boolean;
   loading!: boolean;
   authenticationService = inject(AuthenticationService);
-  errorHandler = inject(ErrorHandler)
-  router = inject(Router)
-  returnUrl: any;
+  errorHandler = inject(ErrorHandler);
+  router = inject(Router);
+  returnUrl = inject(ActivatedRoute).snapshot.queryParams['returnUrl'] || '/';
 
   ngOnInit(): void {
 
-        this.authenticationService.logout();
-        // get return url from route parameters or default to '/'
-        this.returnUrl = inject(ActivatedRoute).snapshot.queryParams['returnUrl'] || '/';
+    this.authenticationService.logout();
+    // get return url from route parameters or default to '/'
+
   }
 
   onSubmit() {
@@ -36,10 +38,10 @@ export class LoginComponent implements OnInit{
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
-        return;
+      return;
     }
 
     this.loading = true;
     this.authenticationService.login(this.loginForm.getRawValue(), this.returnUrl);
-}
+  }
 }

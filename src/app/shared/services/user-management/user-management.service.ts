@@ -16,7 +16,7 @@ type AuthState = {
   providedIn: 'root'
 })
 export class UserManagementService {
-  registerPath = 'User/Register'
+  registerPath = 'api/User/Register'
   constructor(
     private http: HttpClient,
     private errorHandler: ErrorHandlerService) { }

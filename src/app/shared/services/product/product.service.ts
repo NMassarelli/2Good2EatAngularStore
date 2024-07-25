@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay, tap } from 'rxjs/operators';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { ProductModel } from '../../../shared/models/product.model';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
+
+
 @Injectable({
   providedIn: 'root'
 })

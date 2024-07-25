@@ -5,7 +5,6 @@ export class LoginResponse{
     user!: User| null;
     token!: string| null;
     roleValue!: number;
-
 }
 
 export class LoginRequest{
