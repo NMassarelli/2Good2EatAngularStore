@@ -1,13 +1,14 @@
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../models/user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContextToken } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginRequest } from '../../models/login.model';
 import { ErrorHandlerService } from '../../errorHandler/error-handler.service';
 import { BrowserStorageService } from '../browser-service/browser-storage.service';
-
+import { catchError, tap } from 'rxjs/operators';
+import "core-js/stable/atob";
 
 type AuthState = {
   user: User | null;
@@ -71,28 +72,25 @@ export class AuthenticationService {
     }
   };
 
-  login(payload: LoginRequest, returnUrl: string): void {
-    decodedToken:
-    this.http
-      .post<string>(this.loginUrl, payload)
-      .subscribe({
-        next: (res) => {
-        this.browserStorage.set(this._accessTokenKey, res);
+  login(payload: LoginRequest, returnUrl: string) {
+    this.http.post<string>(this.loginUrl, payload)
+    .pipe(
+      tap(_ => this.errorHandlerService.log('logged in user', 'authentication service')),
+      catchError(this.errorHandlerService.handleError<string>('Authentication serivice'))
+    ).subscribe((res)=>{
+         /* this.browserStorage.set(this._accessTokenKey, res.toString());
           let parsed = jwtDecode(res);
-
+          console.log(parsed)
           this._state.update((state) => {
-            state.user = parsed[];
             state.token = res;
             state.loading = false;
-            state.roleValue =
+            state.roleValue = 0
             return state;
-          });
+          });*/
           this.router.navigate([returnUrl]);
-        },
-        error: (err) => {
-          this.errorHandlerService.handleError(err);
-        },
-      });
+    });
+
+
 
 
   }
